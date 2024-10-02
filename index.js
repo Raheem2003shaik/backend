@@ -1,10 +1,12 @@
 const express = require('express');
+const cors=require('cors');
 const app = express();
 const userModel = require('./userDB');
 const Orders = require('./ordersDB')
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -51,6 +53,7 @@ app.post('/api/check-user', async (req, res) => {
 
 app.post('/api/create-user', async (req, res) => {
     const { userName, email, password } = req.body;
+    console.log("signup rececived");
     try {
         const saltRounds = 6;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
